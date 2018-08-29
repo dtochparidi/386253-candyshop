@@ -1,7 +1,7 @@
 # Личный проект «Кэндишоп» [![Build status][travis-image]][travis-url]
 
 * Студент: [Dmitrijs Tohparidi](https://up.htmlacademy.ru/javascript/15/user/386253).
-* Наставник: `Неизвестно`.
+* Наставник: `Лев Балагуров`.
 
 ---
 
