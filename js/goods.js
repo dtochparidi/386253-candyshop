@@ -181,13 +181,18 @@ var getProduct = function () {
   };
 
   console.log(product);
+
+  return product;
 };
 
-getProduct();
+var product = getProduct();
 
 function removeClass(obj, classToRemove) {
   var element = document.querySelector(obj);
-  console.log(element);
+  element.classList.remove(classToRemove);
+}
+
+function removeClassSimple(element, classToRemove) {
   element.classList.remove(classToRemove);
 }
 
@@ -196,13 +201,68 @@ function addClass(obj, classToAdd) {
   element.classList.add(classToAdd);
 }
 
-var createElement = function (tagName, styleName, text) {
-  var element = document.createElement(tagName);
-  element.classList.add(styleName);
-  if (text) {
-    element.content
-  }
-};
+function addClassSimple(element, classToAdd) {
+  element.classList.add(classToAdd);
+}
 
 removeClass('.catalog__cards', 'catalog__cards--load');
 addClass('.catalog__load', 'visually-hidden');
+
+function addElement() {
+  var slot = document.querySelector('#card').content.querySelector('.catalog__card').cloneNode(true);
+  console.log(slot);
+
+  if (product.amount === 0) {
+    removeClassSimple(slot, 'card--in-stock');
+    addClassSimple(slot, 'card--soon');
+  }
+
+  if (product.amount < 0 || product.amount > 5) {
+    removeClassSimple(slot, 'card--in-stock');
+    addClassSimple(slot, 'card--little');
+  }
+
+  var title = slot.querySelector('.card__title');
+  title.textContent = product.name;
+
+  slot.querySelector('.card__price').innerHTML = product.price + '<span class="card__currency">₽</span><span class="card__weight">/' + product.weight + 'Г</span>';
+
+  var rating = slot.querySelector('.stars__rating');
+
+  if (product.rating.value === 1) {
+    addClassSimple(rating, 'stars__rating--one');
+  }
+
+  if (product.rating.value === 2) {
+    addClassSimple(rating, 'stars__rating--two');
+  }
+
+  if (product.rating.value === 3) {
+    addClassSimple(rating, 'stars__rating--three');
+  }
+
+  if (product.rating.value === 4) {
+    addClassSimple(rating, 'stars__rating--four');
+  }
+
+  if (product.rating.value === 5) {
+    addClassSimple(rating, 'stars__rating--five');
+  }
+
+  var stars = slot.querySelector('.star__count');
+  stars.innerHTML = product.rating.number;
+
+  var characteristic = slot.querySelector('.card__characteristic');
+  if (product.nutritionFacts.sugar) {
+    characteristic.innerHTML = 'Содержит сахар';
+  } else {
+    characteristic.innerHTML = 'Без сахара';
+  }
+
+  var list = slot.querySelector('.card__composition-list');
+  list.innerHTML = product.contents;
+
+  return slot;
+}
+
+addElement();
