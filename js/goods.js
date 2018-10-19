@@ -204,7 +204,7 @@ function addClassSimple(element, classToAdd) {
 removeClass('.catalog__cards', 'catalog__cards--load');
 addClass('.catalog__load', 'visually-hidden');
 
-function generateElement() {
+function generateElement(product) {
   var slot = document.querySelector('#card').content.querySelector('.catalog__card').cloneNode(true);
 
   if (product.amount === 0) {
@@ -257,21 +257,20 @@ function generateElement() {
     characteristic.innerHTML = 'Без сахара';
   }
 
-  var b = getProduct();
   var list = slot.querySelector('.card__composition-list');
-  list.innerHTML = b.nutritionFacts.contents;
+  list.innerHTML = product.nutritionFacts.contents;
 
   return slot;
 }
 
 var place = document.querySelector('.catalog__cards');
 
-var showElement = function () {
-  var element = generateElement();
+var addElement = function (element) {
   place.appendChild(element);
 };
 
 for (var i = 0; i < 3; i++) {
   var product = getProduct();
-  showElement();
+  var element = generateElement(product);
+  addElement(element);
 }
