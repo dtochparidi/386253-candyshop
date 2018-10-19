@@ -257,8 +257,9 @@ function generateElement() {
     characteristic.innerHTML = 'Без сахара';
   }
 
+  var b = getProduct();
   var list = slot.querySelector('.card__composition-list');
-  list.innerHTML = product.nutritionFacts.contents;
+  list.innerHTML = b.nutritionFacts.contents;
 
   return slot;
 }
