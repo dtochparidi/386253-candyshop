@@ -91,7 +91,7 @@ var getName = function () {
   return names[getRndInteger(0, names.length - 1)];
 };
 
-var getNumber = function () {
+var getRandomNumber = function () {
   var randomNumber = getRndInteger(0, 20);
   return randomNumber;
 };
@@ -164,7 +164,7 @@ var getProduct = function () {
   var product = {
     name: getName(),
     picture: getImage(),
-    amount: getNumber(),
+    amount: getRandomNumber(),
     price: getAmount(),
     weight: getWeight(),
     rating:
@@ -208,7 +208,7 @@ function addClassSimple(element, classToAdd) {
 removeClass('.catalog__cards', 'catalog__cards--load');
 addClass('.catalog__load', 'visually-hidden');
 
-function addElement() {
+function generateElement() {
   var slot = document.querySelector('#card').content.querySelector('.catalog__card').cloneNode(true);
   console.log(slot);
 
@@ -229,24 +229,22 @@ function addElement() {
 
   var rating = slot.querySelector('.stars__rating');
 
-  if (product.rating.value === 1) {
-    addClassSimple(rating, 'stars__rating--one');
-  }
-
-  if (product.rating.value === 2) {
-    addClassSimple(rating, 'stars__rating--two');
-  }
-
-  if (product.rating.value === 3) {
-    addClassSimple(rating, 'stars__rating--three');
-  }
-
-  if (product.rating.value === 4) {
-    addClassSimple(rating, 'stars__rating--four');
-  }
-
-  if (product.rating.value === 5) {
-    addClassSimple(rating, 'stars__rating--five');
+  switch (product.rating.value) {
+    case 1:
+      addClassSimple(rating, 'stars__rating--one');
+      break;
+    case 2:
+      addClassSimple(rating, 'stars__rating--two');
+      break;
+    case 3:
+      addClassSimple(rating, 'stars__rating--three');
+      break;
+    case 4:
+      addClassSimple(rating, 'stars__rating--four');
+      break;
+    case 5:
+      addClassSimple(rating, 'stars__rating--five');
+      break;
   }
 
   var stars = slot.querySelector('.star__count');
@@ -261,8 +259,17 @@ function addElement() {
 
   var list = slot.querySelector('.card__composition-list');
   list.innerHTML = product.contents;
-
+  
   return slot;
 }
 
-addElement();
+var place = document.querySelector('.catalog__cards');
+
+var cardsArrey = [];
+
+for (var i = 0; i < 10; i++) {
+  cardsArrey[i] = generateElement();
+  place.appendChild(cardsArrey[i]);
+};
+
+console.log(cardsArrey);
