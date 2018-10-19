@@ -136,15 +136,15 @@ var getNutritionFactsContents = function () {
   var randomLength = [];
   for (var i = 0; i <= random; i++) {
     randomLength[i] = getRndInteger(0, contents.length - 1);
-    console.log(randomLength);
+    //console.log(randomLength);
     for (var i2 = 0; i2 <= randomLength.length - 1; i2++) {
       if (i === 0) {
-        console.log('Условие не сработало так как это первый элемент  в массиве');
+        //console.log('Условие не сработало так как это первый элемент  в массиве');
       } else {
         if (randomLength[i] === randomLength[i2 - 1]) {
           randomLength[i] = randomLength[i] + 1;
-          console.log('Прибавили 1');
-          console.log(randomLength);
+          //console.log('Прибавили 1');
+          //console.log(randomLength);
         }
       }
     }
@@ -180,12 +180,8 @@ var getProduct = function () {
     }
   };
 
-  console.log(product);
-
   return product;
 };
-
-var product = getProduct();
 
 function removeClass(obj, classToRemove) {
   var element = document.querySelector(obj);
@@ -210,7 +206,6 @@ addClass('.catalog__load', 'visually-hidden');
 
 function generateElement() {
   var slot = document.querySelector('#card').content.querySelector('.catalog__card').cloneNode(true);
-  console.log(slot);
 
   if (product.amount === 0) {
     removeClassSimple(slot, 'card--in-stock');
@@ -225,9 +220,14 @@ function generateElement() {
   var title = slot.querySelector('.card__title');
   title.textContent = product.name;
 
+  var image = slot.querySelector('.card__img');
+  image.src = product.picture;
+
   slot.querySelector('.card__price').innerHTML = product.price + '<span class="card__currency">₽</span><span class="card__weight">/' + product.weight + 'Г</span>';
 
   var rating = slot.querySelector('.stars__rating');
+
+  removeClassSimple(rating, 'stars__rating--five');
 
   switch (product.rating.value) {
     case 1:
@@ -258,18 +258,19 @@ function generateElement() {
   }
 
   var list = slot.querySelector('.card__composition-list');
-  list.innerHTML = product.contents;
-  
+  list.innerHTML = product.nutritionFacts.contents;
+
   return slot;
 }
 
 var place = document.querySelector('.catalog__cards');
 
-var cardsArrey = [];
-
-for (var i = 0; i < 10; i++) {
-  cardsArrey[i] = generateElement();
-  place.appendChild(cardsArrey[i]);
+var showElement = function () {
+  var element = generateElement();
+  place.appendChild(element);
 };
 
-console.log(cardsArrey);
+for (var i = 0; i < 3; i++) {
+  var product = getProduct();
+  showElement();
+}
